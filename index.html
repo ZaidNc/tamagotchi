@@ -1,26 +1,131 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tamaguchi</title>
-    <link rel="stylesheet" href="styles.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tamagotchi Online</title>
+<style>
+  pre {
+    font-family: monospace;
+    font-size: 20px;
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="tamaguchi">
-            <div class="tamaguchi__sprite" id="tamaguchiSprite"></div>
-            <div class="tamaguchi__status" id="tamaguchiStatus">
-                <p>Estado: Feliz</p>
-            </div>
-        </div>
-        <div class="controls">
-            <button id="feed">Alimentar</button>
-            <button id="clean">Limpiar</button>
-            <button id="play">Jugar</button>
-        </div>
-    </div>
 
-    <script src="script.js"></script>
+<pre id="tamagotchi"></pre>
+
+<script>
+const tamagotchiAsciiArt = `
+   /\\_/\\
+  ( o.o ) 
+   > ^ <
+
+`;
+
+const hungerAsciiArt = `
+ _________________
+|  . . . . . . .  |
+|  .           .  |
+|  .   \\___/   .  |
+|  .     V     .  |
+|  .___________.  |
+|  |___________|  |
+`;
+
+const boredomAsciiArt = `
+ _________________
+|                 |
+|     .  .  .     |
+|    /        \\    |
+|   |          |   |
+|    \\______/    |
+|_________________|
+`;
+
+const sleepinessAsciiArt = `
+ _________________
+|       Z Z       |
+|      /___\\      |
+|     |  .  |     |
+|      \\___/      |
+|_________________|
+`;
+
+const cleanlinessAsciiArt = `
+ _________________
+|      _____      |
+|     |     |     |
+|     |     |     |
+|     |_____|     |
+|_________________|
+`;
+
+let hunger = 0;
+let boredom = 0;
+let sleepiness = 0;
+let cleanliness = 0;
+
+function showStats() {
+  console.log(
+    "Hambre:",
+    hunger,
+    "Aburrimiento:",
+    boredom,
+    "Sueño:",
+    sleepiness,
+    "Higiene:",
+    cleanliness
+  );
+}
+
+function decreaseStat(stat) {
+  return interval = setInterval(() => {
+    if (stat > 0) {
+      stat--;
+    } else {
+      clearInterval(interval);
+    }
+  }, 500);
+}
+
+function handleKeyPress(event) {
+  switch (event.key.toLowerCase()) {
+    case 'h':
+      clearInterval(hungerInterval);
+      hungerInterval = decreaseStat(hunger);
+      break;
+    case 'a':
+      clearInterval(boredomInterval);
+      boredomInterval = decreaseStat(boredom);
+      break;
+    case 's':
+      clearInterval(sleepinessInterval);
+      sleepinessInterval = decreaseStat(sleepiness);
+      break;
+    case 'i':
+      clearInterval(cleanlinessInterval);
+      cleanlinessInterval = decreaseStat(cleanliness);
+      break;
+    default:
+      break;
+  }
+}
+
+function showTamagotchi() {
+  const tamagotchiElement = document.getElementById('tamagotchi');
+  tamagotchiElement.textContent = tamagotchiAsciiArt;
+}
+
+showTamagotchi();
+
+document.addEventListener('keypress', handleKeyPress);
+
+let hungerInterval = null;
+let boredomInterval = null;
+let sleepinessInterval = null;
+let cleanlinessInterval = null;
+</script>
+
 </body>
 </html>
